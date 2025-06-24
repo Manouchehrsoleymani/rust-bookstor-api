@@ -45,3 +45,12 @@ Using this system, we'll be able to:
 I'm going to Dockerize our API server to deploy and run it anywhere.
 
 ## How To run :
+```
+- cargo install sea-orm-cli
+- sea migrate init -d ./src/migrate/
+- remove all unneccessary files and folders from migrate directory [rename lib.rs to mod.rm and move mod.rs and XXXX_creat_table.rs to migrate folder and remove all others]
+- develop the tables Structure into table files
+- sea migrate generate -d ./src/migrator create_author_table
+- sea migrate generate -d ./src/migrator create_book_table
+
+```
