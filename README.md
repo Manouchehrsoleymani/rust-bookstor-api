@@ -47,10 +47,15 @@ I'm going to Dockerize our API server to deploy and run it anywhere.
 ## How To run :
 ```
 - cargo install sea-orm-cli
-- sea migrate init -d ./src/migrate/
+- sea migrate init -d ./src/migrator/
 - remove all unneccessary files and folders from migrate directory [rename lib.rs to mod.rm and move mod.rs and XXXX_creat_table.rs to migrate folder and remove all others]
 - develop the tables Structure into table files
 - sea migrate generate -d ./src/migrator create_author_table
 - sea migrate generate -d ./src/migrator create_book_table
+- # Generate entity files of database `bookstore` to `src/entities` run into root of project
+$ sea-orm-cli generate entity \
+    -u mysql://root:my_secret@localhost:3306/bookstore \
+    -o src/entities
+
 
 ```

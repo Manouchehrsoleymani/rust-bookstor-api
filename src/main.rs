@@ -26,7 +26,7 @@ impl Default for AppConfig{
             db_name: std::env::var("BOOKSTOR_DB_NAME").unwrap_or("bookstore".to_string()),
             db_username: std::env::var("BOOKSTOR_DB_USER").unwrap_or("root".to_string()),
             db_password: std::env::var("BOOKSTOR_DB_PASS").unwrap_or("my_secret".to_string()),
-            db_host: std::env::var("BOOKSTOR_DB_Host").unwrap_or("localhost".to_string()),
+            db_host: std::env::var("BOOKSTOR_DB_HOST").unwrap_or("localhost".to_string()),
             db_port: std::env::var("BOOKSTOR_DB_PORT").unwrap_or("3306".to_string()),
 
         }
