@@ -41,11 +41,16 @@ fn index() -> &'static str {
 #[launch]
 async fn rocket() -> _ {
     let config=AppConfig::default();
-    let db=match db::connect(&config).await {
-        Ok(db)=> db,
-        Err(err)=> panic!("{}",err),
-        
+    
+    let db = match db::setup_db(&config).await {
+        Ok(db) => db,
+        Err(err) => panic!("{}", err),
     };
+    // let db=match db::connect(&config).await {
+    //     Ok(db)=> db,
+    //     Err(err)=> panic!("{}",err),
+        
+    // };
     match Migrator::up(&db, None).await {
         Ok(_)=>(),
         Err(err)=>panic!("{}",err)
