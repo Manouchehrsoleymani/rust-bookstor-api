@@ -7,11 +7,13 @@
 
 #[macro_use] 
 extern crate rocket;
+use rocket::{http::Status};
 use sea_orm_migration::MigratorTrait;
 
-use crate::migrator::Migrator;
+use crate::{ controllers::{ErrorResponse, Response, SuccessResponse}, migrator::Migrator};
 mod migrator;
 mod db;
+mod controllers;
 
 pub struct AppConfig{
     db_host:String,
@@ -34,8 +36,8 @@ impl Default for AppConfig{
 }
 
 #[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
+fn index() -> Response<String> {
+    Ok(SuccessResponse((Status::Ok,"Hello World!".to_string())))
 }
 
 #[launch]
@@ -55,5 +57,25 @@ async fn rocket() -> _ {
         Ok(_)=>(),
         Err(err)=>panic!("{}",err)
     };
-    rocket::build().mount("/", routes![index])
+    rocket::build()
+    .mount("/", routes![index])
+    .mount("/auth", routes![
+        controllers::auth::signin,
+        controllers::auth::signup
+    ])
+    .mount("/authors", routes![
+        controllers::authors::index,
+        controllers::authors::create,
+        controllers::authors::show,
+        controllers::authors::update,
+        controllers::authors::delete
+    ])
+    .mount("/books", routes![
+        controllers::books::index,
+        controllers::books::create,
+        controllers::books::show,
+        controllers::books::update,
+        controllers::books::delete
+    ])
+
 }
